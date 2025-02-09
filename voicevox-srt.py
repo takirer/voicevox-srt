@@ -5,8 +5,9 @@ Summary:
     このスクリプトは、入力されたvvprojファイルから音声およびテキストデータを抽出し、
     以下の特徴を持つSRTファイルを生成します:
         - 日本語テキストはfugashiを使用して自然に分割されます。
-        - 各字幕行は最大文字数（デフォルトは29文字）以内に制限されます。
-        - 不自然な改行が発生した場合、非常に短い行をマージしてトークン単位で再分割し、可読性を向上させます。
+        - 各字幕行は最大文字数以内に制限されます。
+        - 不自然な改行が発生した場合、非常に短い行や英単語が途中で分断される場合は、
+          前後の行をマージしてトークン単位で再分割し、可読性を向上させます。
     必要に応じて、メインブロック内のパラメータ（MAX_CHARS, VVPROJ_PATH, OUTPUT_SRT_PATH）を変更できます.
 
 Usage:
@@ -16,14 +17,24 @@ License:
     This script is licensed under the terms provided by yKesamaru, the original author.
 """
 
-
-import json
-
-# GenericTaggerをインポート（柔軟な辞書形式に対応）
-from fugashi import GenericTagger  # type: ignore
+import json  # JSONデータを扱うためのモジュールをインポート（JSONパース用）
+from fugashi import GenericTagger  # GenericTaggerをインポート（柔軟な辞書形式に対応）
 
 # GenericTaggerを使用してMeCabの設定ファイルとUTF-8版辞書を明示的に指定して初期化する
 tagger = GenericTagger("-r /etc/mecabrc -d /var/lib/mecab/dic/ipadic-utf8")
+
+
+def is_ascii_letter(ch):
+    """
+    指定された文字が英字（ASCII）であるかを判定して返す関数。
+
+    Args:
+        ch (str): 判定対象の1文字。
+
+    Returns:
+        bool: 英字であればTrue、そうでなければFalse。
+    """
+    return ('A' <= ch <= 'Z') or ('a' <= ch <= 'z')
 
 
 def fugashi_segment_text(text):
@@ -93,6 +104,9 @@ def split_long_segment(segment, max_chars):
     """
     長い文節を自然な切れ目（句読点等）で分割し、各行が最大文字数以内となるように短くして返す関数。
 
+    句読点で分割する際、分割後の残り部分の先頭が句読点の場合は、その句読点を前のセグメントに含め、
+    句読点が孤立しないようにします。
+
     Args:
         segment (str): 入力文節。
         max_chars (int): 1行あたりの最大文字数。
@@ -112,8 +126,16 @@ def split_long_segment(segment, max_chars):
                 break
         if split_index == -1 or split_index < max_chars * 0.5:
             split_index = max_chars
-        result.append(remaining[:split_index].strip())
+        segment_piece = remaining[:split_index].strip()
         remaining = remaining[split_index:]
+        # もし残り部分の先頭が句読点であれば、これを前のセグメントに付加して句読点の孤立を防ぐ
+        if remaining and remaining[0] in punctuation_marks:
+            j = 0
+            while j < len(remaining) and remaining[j] in punctuation_marks:
+                j += 1
+            segment_piece += remaining[:j]
+            remaining = remaining[j:]
+        result.append(segment_piece)
     if remaining:
         result.append(remaining.strip())
     return result
@@ -145,10 +167,11 @@ def token_based_split(text, max_chars):
     return lines
 
 
-def adjust_line_breaks(lines, max_chars=29, min_line_length=7):
+def adjust_line_breaks(lines, max_chars, min_line_length=7):
     """
-    分割済みの行リストを調整し、隣接する行で次の行の文字数が指定の閾値より短い場合、前後の行をマージして
-    トークン単位で再分割し、自然な改行に整形して返す関数。
+    分割済みの行リストを調整し、隣接する行で次の行の文字数が指定の閾値より短い場合、
+    または英単語が途中で分断されている場合に、前後の行をマージしてトークン単位で再分割し、
+    自然な改行に整形して返す関数。
 
     Args:
         lines (list[str]): 元の行リスト。
@@ -161,8 +184,18 @@ def adjust_line_breaks(lines, max_chars=29, min_line_length=7):
     new_lines = []
     i = 0
     while i < len(lines):
-        if i < len(lines) - 1 and len(lines[i + 1].strip()) < min_line_length:
-            merged = lines[i].strip() + lines[i + 1].strip()
+        merge_flag = False
+        if i < len(lines) - 1:
+            current_line = lines[i].rstrip()
+            next_line = lines[i+1].lstrip()
+            # 英単語の途中分断を検出：現在の行の末尾と次の行の先頭がともに英字の場合
+            if current_line and next_line and is_ascii_letter(current_line[-1]) and is_ascii_letter(next_line[0]):
+                merge_flag = True
+            # または次の行の文字数がmin_line_length未満の場合
+            elif len(next_line) < min_line_length:
+                merge_flag = True
+        if merge_flag:
+            merged = lines[i].strip() + lines[i+1].strip()
             splitted = token_based_split(merged, max_chars)
             new_lines.extend(splitted)
             i += 2
@@ -172,7 +205,7 @@ def adjust_line_breaks(lines, max_chars=29, min_line_length=7):
     return new_lines
 
 
-def smart_split_text(text, max_chars=29):
+def smart_split_text(text, max_chars):
     """
     日本語テキストを自然な文節に分割し、1行あたりの最大文字数以内に整形した文字列を返す関数。
 
@@ -180,7 +213,8 @@ def smart_split_text(text, max_chars=29):
       1. fugashiを用いてテキストを文節に分割する。
       2. 分割された文節をグリーディに連結し、各行がmax_charsを超えないようにする。
          なお、単一の文節がmax_charsを超える場合は、句読点等を利用してさらに分割します。
-      3. 隣接する行で非常に短い行がある場合は、前後の行をマージし、形態素単位で再分割して自然な改行に整形します。
+      3. 隣接する行で非常に短い行や、英単語が途中で分断されている場合は、前後の行をマージし、
+         形態素単位で再分割して自然な改行に整形します。
 
     Args:
         text (str): 入力テキスト。
@@ -215,7 +249,7 @@ def smart_split_text(text, max_chars=29):
     return "\n".join(lines)
 
 
-def convert_vvproj_to_srt(vvproj_file, output_srt, max_chars=29):
+def convert_vvproj_to_srt(vvproj_file, output_srt, max_chars):
     """
     指定したvvprojファイルから音声およびテキストデータを抽出し、自然な文節分割と1行あたりの文字数制限を適用した上で、
     適切なタイムスタンプ付きのSRT字幕ファイルを生成して出力する関数。
