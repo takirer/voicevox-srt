@@ -1,14 +1,6 @@
 # VOICEVOX-SRT
 VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する**ツール。
 
-![GitHub release](https://img.shields.io/github/v/release/python/cpython?style=flat)
-
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
-  <img src="https://img.shields.io/badge/ONNXRUNTIME GPU-27338e?style=for-the-badge&logoColor=white">
-  <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white">
-  <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue">
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black">
-
 <img src="https://img.shields.io/github/v/release/yKesamaru/voicevox-srt?style=for-the-badge&logo=github&logoColor=white">
 
 
