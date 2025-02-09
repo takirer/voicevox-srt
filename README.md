@@ -1,8 +1,7 @@
 # VOICEVOX-SRT
 VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する**ツール。
 
-<img src="https://img.shields.io/github/v/release/yKesamaru/voicevox-srt?style=for-the-badge&logo=github&logoColor=white">
-
+<!-- <img src="https://img.shields.io/github/v/release/yKesamaru/voicevox-srt?style=for-the-badge&logo=github&logoColor=white"> -->
 
 ## 特長
 - 完璧なタイミングの字幕を生成。出力されるSRTファイルは、音声の再生時間に合わせて字幕が表示されるようになっています。kdenliveなどの動画編集ソフトに読み込ませることで、**字幕の自動配置が可能**です。手作業の煩雑さを大幅に減らします！
@@ -21,13 +20,6 @@ VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する*
    ```
 4. SRTファイルをkdenliveなどの動画編集ソフトに読み込ませます。
 5. 字幕の自動配置が完了しました。
-
-## 利用規約
-VOICEVOX利用規約( https://voicevox.hiroshiba.jp/term/ )と共に、以下の内容を必ずお守りいただいたうえでVOICEVOX-SRTをご使用ください。
-個人がVOICEVOX-SRTを用いて生成したSRTファイルを用いて作成した動画は、
-「VOICEVOX-SRT: https://github.com/yKesamaru/voicevox-srt」
-とクレジットを記載すれば商用・非商用問わず利用可能です。
-ただし企業が携わる形で利用する場合は「y.kesamaru@tokai-kaoninsho.com」に対し事前確認をとる必要があります。
 
 ## アルゴリズムの概要
 入力のJSON形式のvvprojファイルから、テキストの自然な分割と音声時間の詳細な計算を行い、スライディングウィンドウ方式、ウィンドウ内句読点探索、およびトークンベース再分割などの技法を用いて各字幕行のレイアウトを最適化することで、可読性の高いSRT字幕ファイルを生成しています。
@@ -71,6 +63,12 @@ VOICEVOX利用規約( https://voicevox.hiroshiba.jp/term/ )と共に、以下の
 #### 補足: 英単語の途中改行の防止
 `adjust_line_breaks`関数では、隣接する行のうち、前行の末尾と次行の先頭がともに英字の場合や、次行が非常に短い場合に、これらの行をマージして再分割する処理を行います。これにより、英単語が途中で改行されることなく、単語全体が前行に収まるように調整されます。
 
+## 利用規約
+VOICEVOX利用規約( https://voicevox.hiroshiba.jp/term/ )と共に、以下の内容を必ずお守りいただいたうえでVOICEVOX-SRTをご使用ください。
+個人がVOICEVOX-SRTを用いて生成したSRTファイルを用いて作成した動画は、
+「VOICEVOX-SRT: https://github.com/yKesamaru/voicevox-srt」
+とクレジットを記載すれば商用・非商用問わず利用可能です。
+ただし企業が携わる形で利用する場合は「y.kesamaru@tokai-kaoninsho.com」に対し事前確認をとる必要があります。
 
 
 
