@@ -7,7 +7,7 @@ VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する*
 - 完璧なタイミングの字幕を生成。出力されるSRTファイルは、音声の再生時間に合わせて字幕が表示されるようになっています。kdenliveなどの動画編集ソフトに読み込ませることで、**字幕の自動配置が可能**です。手作業の煩雑さを大幅に減らします！
 - 適切な文節で改行を行います。
 
-![](assets/2025-02-09-17-32-19.png)
+![](https://raw.githubusercontent.com/yKesamaru/voicevox-srt/refs/heads/main/assets/2025-02-09-17-32-19.png)
 
 [YouTubeで見る](https://youtu.be/QAqP9a-IJHo)
 
