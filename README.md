@@ -66,7 +66,7 @@ VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する*
 ## 利用規約
 VOICEVOX利用規約( https://voicevox.hiroshiba.jp/term/ )と共に、以下の内容を必ずお守りいただいたうえでVOICEVOX-SRTをご使用ください。
 個人がVOICEVOX-SRTを用いて生成したSRTファイルを用いて作成した動画は、
-「VOICEVOX-SRT: https://github.com/yKesamaru/voicevox-srt」
+「 VOICEVOX-SRT: https://github.com/yKesamaru/voicevox-srt 」
 とクレジットを記載すれば商用・非商用問わず利用可能です。
 ただし企業が携わる形で利用する場合は「y.kesamaru@tokai-kaoninsho.com」に対し事前確認をとる必要があります。
 
