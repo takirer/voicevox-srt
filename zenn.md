@@ -5,12 +5,14 @@ VOICEVOXで生成したvvprojファイルからSRTファイルを出力するツ
 
 このツールは、入力のJSON形式のvvprojファイルから、テキストの自然な分割と音声時間の詳細な計算を行い、スライディングウィンドウ方式、ウィンドウ内句読点探索、およびトークンベース再分割などの技法を用いて各字幕行のレイアウトを最適化することで、字幕の自動配置を実現しています。
 
-![](assets/eye-catch.png)
+![](https://raw.githubusercontent.com/yKesamaru/voicevox-srt/refs/heads/main/assets/eye-catch.png)
 
 ## 例
-[YouTubeで見る](https://www.youtube.com/watch?v=h2N97F1deSo)
+[YouTubeで見る](https://www.youtube.com/watch?v=GlfdhSk6bEM)
 
-![](assets/2025-02-09-17-32-19.png)
+![](https://raw.githubusercontent.com/yKesamaru/voicevox-srt/refs/heads/main/assets/output.gif)
+
+![](https://raw.githubusercontent.com/yKesamaru/voicevox-srt/refs/heads/main/assets/2025-02-09-17-32-19.png)
 
 ## リポジトリ
 yKesamaru / voicevox-srt
@@ -134,14 +136,14 @@ vvprojファイルはJSON形式で記述されており、以下のような構�
 ```
 :::
 
--`"audioItems"`キー
+- `"audioItems"`キー
   `"talk"`内にあり、各音声項目（字幕に対応する）の辞書の集合です。
-  -各音声項目の`"text"`キーには、字幕として表示するテキストが格納されています。
-  -同じ音声項目の`"query"`キーには、発話データが含まれており、そこから以下の情報を取得します:
-    -`"accentPhrases"`:各アクセントフレーズに関する情報。
-    -`"moras"`:各アクセントフレーズ内で、各モーラの`"vowelLength"`（母音の長さ）と`"consonantLength"`（子音の長さ）。
-    -`"pauseMora"`:アクセントフレーズ間のポーズを示す情報（主に`"vowelLength"`）。
-    -`"prePhonemeLength"`と`"postPhonemeLength"`:発話前後の無音時間。
+  - 各音声項目の`"text"`キーには、字幕として表示するテキストが格納されています。
+  - 同じ音声項目の`"query"`キーには、発話データが含まれており、そこから以下の情報を取得します:
+    - `"accentPhrases"`:各アクセントフレーズに関する情報。
+    - `"moras"`:各アクセントフレーズ内で、各モーラの`"vowelLength"`（母音の長さ）と`"consonantLength"`（子音の長さ）。
+    - `"pauseMora"`:アクセントフレーズ間のポーズを示す情報（主に`"vowelLength"`）。
+    - `"prePhonemeLength"`と`"postPhonemeLength"`:発話前後の無音時間。
 
 ### 各字幕の時間の長さを得るアルゴリズム
 #### 音声時間計算の流れ
