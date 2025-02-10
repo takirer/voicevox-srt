@@ -21,6 +21,29 @@ VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する*
 4. SRTファイルをkdenliveなどの動画編集ソフトに読み込ませます。
 5. 字幕の自動配置が完了しました。
 
+## MeCabのインストール
+スクリプト内で使用している`fugashi`は、MeCabのPythonラッパーライブラリです。MeCabをインストールすることで、`fugashi`を使用することができます。
+```bash
+sudo apt-get update
+sudo apt-get install mecab libmecab-dev mecab-ipadic-utf8
+```
+スクリプト内ではGenericTaggerを使用してMeCabの設定ファイルとUTF-8版辞書を明示的に指定して初期化することが必要です。
+```python
+tagger = GenericTagger("-r /etc/mecabrc -d /var/lib/mecab/dic/ipadic-utf8")
+```
+MeCabの設定ファイルとUTF-8版辞書のパスは、環境によって異なる場合がありますので、適宜変更してください。
+
+## ホスト環境
+開発にあたり使用したホスト環境を以下に示します。
+```bash
+$ python -V
+Python 3.10.12
+$ inxi -S --filter
+System:
+  Kernel: 6.8.0-52-generic x86_64 bits: 64 Desktop: Unity
+    Distro: Ubuntu 22.04.5 LTS (Jammy Jellyfish)
+```
+
 ## アルゴリズムの概要
 入力のJSON形式のvvprojファイルから、テキストの自然な分割と音声時間の詳細な計算を行い、スライディングウィンドウ方式、ウィンドウ内句読点探索、およびトークンベース再分割などの技法を用いて各字幕行のレイアウトを最適化することで、可読性の高いSRT字幕ファイルを生成しています。
 

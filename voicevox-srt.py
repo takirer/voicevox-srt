@@ -18,6 +18,7 @@ License:
 """
 
 import json  # JSONデータを扱うためのモジュールをインポート（JSONパース用）
+
 from fugashi import GenericTagger  # GenericTaggerをインポート（柔軟な辞書形式に対応）
 
 # GenericTaggerを使用してMeCabの設定ファイルとUTF-8版辞書を明示的に指定して初期化する
