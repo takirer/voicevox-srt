@@ -1,5 +1,5 @@
 # VOICEVOX-SRT
-VOICEVOXから**字幕の自動配置が可能なSRTファイルを生成する**ツール。
+VOICEVOXから**発話と完全同期するSRTファイルを生成する**ツール。
 
 <!-- <img src="https://img.shields.io/github/v/release/yKesamaru/voicevox-srt?style=for-the-badge&logo=github&logoColor=white"> -->
 
