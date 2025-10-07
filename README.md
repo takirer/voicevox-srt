@@ -1,3 +1,20 @@
+# Customized Usage
+
+```bash
+# 基本使用法
+python voicevox-srt-perfect-corrected.py sample.vvproj
+
+# カスタムパラメータ
+python voicevox-srt-perfect-corrected.py file.vvproj 25 1
+
+# 相対パス
+python voicevox-srt-perfect-corrected.py ../data/voice.vvproj
+
+# 絶対パス
+python voicevox-srt-perfect-corrected.py /path/to/file.vvproj
+```
+
+
 # VOICEVOX-SRT
 VOICEVOXから**発話と完全同期するSRTファイルを生成する**ツール。
 

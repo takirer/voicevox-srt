@@ -22,7 +22,7 @@ import json  # JSONデータを扱うためのモジュールをインポート�
 from fugashi import GenericTagger  # GenericTaggerをインポート（柔軟な辞書形式に対応）
 
 # GenericTaggerを使用してMeCabの設定ファイルとUTF-8版辞書を明示的に指定して初期化する
-tagger = GenericTagger("-r /etc/mecabrc -d /var/lib/mecab/dic/ipadic-utf8")
+tagger = GenericTagger("-r /opt/homebrew/etc/mecabrc -d /opt/homebrew/lib/mecab/dic/ipadic")
 
 
 def is_ascii_letter(ch):
@@ -295,7 +295,9 @@ def convert_vvproj_to_srt(vvproj_file, output_srt, max_chars):
 if __name__ == "__main__":
     # 設定パラメータ（必要に応じて変更してください）
     MAX_CHARS = 30
-    VVPROJ_PATH = "a.vvproj"
-    OUTPUT_SRT_PATH = "output.srt"
+    VVPROJ_PATH = "/Volumes/usr/image/movie/youtube-davinciresolve/voicevox/Gouki/EP-1/Opening_Training.vvproj"
+    OUTPUT_SRT_PATH = "/Volumes/usr/image/movie/youtube-davinciresolve/voicevox/Gouki/EP-1/Opening_Training_org.srt"
+    # VVPROJ_PATH = "a.vvproj"
+    # OUTPUT_SRT_PATH = "output.srt"
 
     convert_vvproj_to_srt(VVPROJ_PATH, OUTPUT_SRT_PATH, max_chars=MAX_CHARS)
