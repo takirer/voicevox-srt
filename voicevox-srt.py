@@ -294,9 +294,9 @@ def convert_vvproj_to_srt(vvproj_file, output_srt, max_chars):
 
 if __name__ == "__main__":
     # 設定パラメータ（必要に応じて変更してください）
-    MAX_CHARS = 30
-    VVPROJ_PATH = "/Volumes/usr/image/movie/youtube-davinciresolve/voicevox/Gouki/EP-1/Opening_Training.vvproj"
-    OUTPUT_SRT_PATH = "/Volumes/usr/image/movie/youtube-davinciresolve/voicevox/Gouki/EP-1/Opening_Training_org.srt"
+    MAX_CHARS = 26
+    VVPROJ_PATH = "/Volumes/usr/image/movie/youtube-davinciresolve/voicevox/Gouki/EP-1/RankedMatch_01.vvproj"
+    OUTPUT_SRT_PATH = "/Volumes/usr/image/movie/youtube-davinciresolve/voicevox/Gouki/EP-1/RankedMatch_01_org.srt"
     # VVPROJ_PATH = "a.vvproj"
     # OUTPUT_SRT_PATH = "output.srt"
 

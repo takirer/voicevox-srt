@@ -412,7 +412,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python voicevox-srt-perfect-corrected.py <vvproj_file> [max_chars] [max_lines]")
         print("  vvproj_file: VVPROJファイルのパス（絶対パスまたは相対パス）")
-        print("  max_chars: 1行あたりの最大文字数（デフォルト: 30）")
+        print("  max_chars: 1行あたりの最大文字数（デフォルト: 26）")
         print("  max_lines: 1つの字幕の最大行数（デフォルト: 2、0以下で制限なし）")
         print("")
         print("例:")
@@ -423,7 +423,7 @@ if __name__ == "__main__":
     
     # 引数の取得
     VVPROJ_PATH = sys.argv[1]
-    MAX_CHARS = int(sys.argv[2]) if len(sys.argv) > 2 else 30
+    MAX_CHARS = int(sys.argv[2]) if len(sys.argv) > 2 else 26
     MAX_LINES = int(sys.argv[3]) if len(sys.argv) > 3 else 2
     
     # 入力ファイルの存在確認
