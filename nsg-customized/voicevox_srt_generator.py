@@ -1,5 +1,5 @@
 """
-voicevox_srt_generator_fixed_final.py
+voicevox_srt_generator.py
 
 NextStage Gaming チャンネル専用 VOICEVOX-SRT統合ジェネレータ（最終修正版）
 既存の動作しているvoicevox_srt_generator.pyをベースに、MAX_CHARS/MAX_LINESを確実に修正
@@ -562,7 +562,7 @@ class VOICEVOXSRTGenerator:
         # ファイル出力
         if output_path is None:
             vvproj_file = Path(vvproj_path)
-            output_path = vvproj_file.parent / f"{vvproj_file.stem}_final_fixed.srt"
+            output_path = vvproj_file.parent / f"{vvproj_file.stem}_auto_generated.srt"
 
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(srt_content)
@@ -576,7 +576,7 @@ class VOICEVOXSRTGenerator:
 
 def main():
     if len(sys.argv) != 2:
-        print("使用方法: python voicevox_srt_generator_fixed_final.py <vvproj_file>")
+        print("使用方法: python voicevox_srt_generator.py <vvproj_file>")
         sys.exit(1)
 
     vvproj_path = sys.argv[1]
